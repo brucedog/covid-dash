@@ -20,6 +20,9 @@ namespace CovidDashboard.Server.Controllers
             _covidService = covidService;
         }
 
+
+        [Route("[action]")]
+        [HttpGet]
         public async Task<USStatus> GetCurrentUSStats()
         {
             try
