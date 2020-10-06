@@ -1,6 +1,7 @@
 ﻿@page "/covid"
 @using CovidDashboard.Shared
 @inject HttpClient Http
+@using Syncfusion.Blazor.Charts
 
 <h1>Covid Data</h1>
 
@@ -8,7 +9,7 @@
 
 @if (usStatus == null)
 {
-<p><em>Loading...</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
@@ -17,10 +18,11 @@ else
 
 @code {
     private USStatus usStatus;
+    private List<DailyStatus> dailyStatuses;
 
     protected override async Task OnInitializedAsync()
     {
         usStatus = await Http.GetFromJsonAsync<USStatus>("api/Covid/GetCurrentUSStats");
+        dailyStatuses = await Http.GetFromJsonAsync<List<DailyStatus>>("api/Covid/GetTexasDailyStats");
     }
-
 }

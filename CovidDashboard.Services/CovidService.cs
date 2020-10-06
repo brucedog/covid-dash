@@ -10,6 +10,7 @@ namespace CovidDashboard.Services
     public class CovidService : ICovidService
     {
         private const string CurrentUs = "https://api.covidtracking.com/v1/us/current.json";
+        private const string DailyTexasStat = "https://api.covidtracking.com/v1/states/tx/daily.json";
         private HttpClient _httpClient;
 
         public CovidService()
@@ -24,6 +25,15 @@ namespace CovidDashboard.Services
             List<USStatus> data = JsonConvert.DeserializeObject<List<USStatus>>(json_data);
 
             return data[0];
+        }
+
+        public async Task<List<DailyStatus>> GetTexasDailyStats()
+        {
+            string json_data = await _httpClient.GetStringAsync(DailyTexasStat);
+
+            List<DailyStatus> data = JsonConvert.DeserializeObject<List<DailyStatus>>(json_data);
+
+            return data;
         }
     }
 }

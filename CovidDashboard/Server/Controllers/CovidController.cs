@@ -36,5 +36,21 @@ namespace CovidDashboard.Server.Controllers
             }
             return new USStatus();
         }
+
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<List<DailyStatus>> GetTexasDailyStats()
+        {
+            try
+            {
+                var result = await _covidService.GetTexasDailyStats();
+                return result;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+            return  new List<DailyStatus>();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CovidDashboard.Interfaces;
 using CovidDashboard.Server.Controllers;
@@ -21,6 +22,19 @@ namespace CovidDashboardUnitTests
             USStatus usStatus = await covidController.GetCurrentUSStats();
 
             Assert.NotNull(usStatus);
+        }
+
+        [Fact]
+        public async void CovidControllerGetTexasStats()
+        {
+            Mock<ICovidService> iCovidService = new Moq.Mock<ICovidService>();
+            iCovidService.Setup(s => s.GetTexasDailyStats()).Returns(Task.FromResult(new List<DailyStatus>()));
+
+            CovidController covidController = new CovidController(iCovidService.Object);
+
+            var stats = await covidController.GetTexasDailyStats();
+
+            Assert.NotNull(stats);
         }
     }
 }
