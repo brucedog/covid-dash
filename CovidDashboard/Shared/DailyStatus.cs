@@ -8,28 +8,28 @@ namespace CovidDashboard.Shared
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
-        [JsonProperty(PropertyName = "positive")]
+        [JsonProperty(PropertyName = "positive", NullValueHandling = NullValueHandling.Ignore)]
         public int Positive { get; set; }
 
         [JsonProperty(PropertyName = "probableCases", NullValueHandling = NullValueHandling.Ignore)]
         public int ProbableCases { get; set; }
 
-        [JsonProperty(PropertyName = "negative")]
+        [JsonProperty(PropertyName = "negative, NullValueHandling = NullValueHandling.Ignore")]
         public int Negative { get; set; }
 
         [JsonProperty(PropertyName = "pending", NullValueHandling = NullValueHandling.Ignore )]
         public int Pending { get; set; }
 
-        [JsonProperty(PropertyName = "totalTestResults")]
+        [JsonProperty(PropertyName = "totalTestResults", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalTestResults { get; set; }
 
-        [JsonProperty(PropertyName = "hospitalizedCurrently")]
+        [JsonProperty(PropertyName = "hospitalizedCurrently", NullValueHandling = NullValueHandling.Ignore)]
         public int HospitalizedCurrently { get; set; }
 
         [JsonProperty(PropertyName = "hospitalizedCumulative", NullValueHandling = NullValueHandling.Ignore)]
         public int HospitalizedCumulative { get; set; }
 
-        [JsonProperty(PropertyName = "inIcuCurrently")]
+        [JsonProperty(PropertyName = "inIcuCurrently", NullValueHandling = NullValueHandling.Ignore)]
         public int InIcuCurrently { get; set; }
 
         [JsonProperty(PropertyName = "inIcuCumulative", NullValueHandling = NullValueHandling.Ignore)]
@@ -41,31 +41,31 @@ namespace CovidDashboard.Shared
         [JsonProperty(PropertyName = "onVentilatorCumulative", NullValueHandling = NullValueHandling.Ignore)]
         public int OnVentilatorCumulative { get; set; }
 
-        [JsonProperty(PropertyName = "recovered")]
+        [JsonProperty(PropertyName = "recovered", NullValueHandling = NullValueHandling.Ignore)]
         public int Recovered { get; set; }
 
         [JsonProperty(PropertyName = "dataQualityGrade")]
         public string DataQualityGrade { get; set; }
 
-        [JsonProperty(PropertyName = "lastUpdateEt")]
+        [JsonProperty(PropertyName = "lastUpdateEt", NullValueHandling = NullValueHandling.Ignore)]
         public string LastUpdateEt { get; set; }
 
-        [JsonProperty(PropertyName = "dateModified")]
+        [JsonProperty(PropertyName = "dateModified", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime DateModified { get; set; }
 
-        [JsonProperty(PropertyName = "checkTimeEt")]
+        [JsonProperty(PropertyName = "checkTimeEt", NullValueHandling = NullValueHandling.Ignore)]
         public string CheckTimeEt { get; set; }
 
-        [JsonProperty(PropertyName = "death")]
+        [JsonProperty(PropertyName = "death", NullValueHandling = NullValueHandling.Ignore)]
         public int Death { get; set; }
 
         [JsonProperty(PropertyName = "hospitalized", NullValueHandling = NullValueHandling.Ignore)]
         public int Hospitalized { get; set; }
 
-        [JsonProperty(PropertyName = "dateChecked")]
+        [JsonProperty(PropertyName = "dateChecked", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime DateChecked { get; set; }
 
-        [JsonProperty(PropertyName = "totalTestsViral")]
+        [JsonProperty(PropertyName = "totalTestsViral", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalTestsViral { get; set; }
 
         [JsonProperty(PropertyName = "positiveTestsViral", NullValueHandling = NullValueHandling.Ignore)]
@@ -74,7 +74,7 @@ namespace CovidDashboard.Shared
         [JsonProperty(PropertyName = "negativeTestsViral", NullValueHandling = NullValueHandling.Ignore)]
         public int NegativeTestsViral { get; set; }
 
-        [JsonProperty(PropertyName = "positiveCasesViral")]
+        [JsonProperty(PropertyName = "positiveCasesViral", NullValueHandling = NullValueHandling.Ignore)]
         public int PositiveCasesViral { get; set; }
 
         [JsonProperty(PropertyName = "deathConfirmed", NullValueHandling = NullValueHandling.Ignore)]
@@ -89,10 +89,10 @@ namespace CovidDashboard.Shared
         [JsonProperty(PropertyName = "totalTestsPeopleViral", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalTestsPeopleViral { get; set; }
 
-        [JsonProperty(PropertyName = "totalTestsAntibody")]
+        [JsonProperty(PropertyName = "totalTestsAntibody", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalTestsAntibody { get; set; }
 
-        [JsonProperty(PropertyName = "positiveTestsAntibody")]
+        [JsonProperty(PropertyName = "positiveTestsAntibody", NullValueHandling = NullValueHandling.Ignore)]
         public int PositiveTestsAntibody { get; set; }
 
         [JsonProperty(PropertyName = "negativeTestsAntibody", NullValueHandling = NullValueHandling.Ignore)]
@@ -113,52 +113,52 @@ namespace CovidDashboard.Shared
         [JsonProperty(PropertyName = "positiveTestsPeopleAntigen", NullValueHandling = NullValueHandling.Ignore)]
         public int PositiveTestsPeopleAntigen { get; set; }
 
-        [JsonProperty(PropertyName = "totalTestsAntigen")]
+        [JsonProperty(PropertyName = "totalTestsAntigen", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalTestsAntigen { get; set; }
 
-        [JsonProperty(PropertyName = "positiveTestsAntigen")]
+        [JsonProperty(PropertyName = "positiveTestsAntigen", NullValueHandling = NullValueHandling.Ignore)]
         public int PositiveTestsAntigen { get; set; }
 
         [JsonProperty(PropertyName = "fips")]
         public string Fips { get; set; }
 
-        [JsonProperty(PropertyName = "positiveIncrease")]
+        [JsonProperty(PropertyName = "positiveIncrease", NullValueHandling = NullValueHandling.Ignore)]
         public int PositiveIncrease { get; set; }
         
-        [JsonProperty(PropertyName = "negativeIncrease")]
+        [JsonProperty(PropertyName = "negativeIncrease", NullValueHandling = NullValueHandling.Ignore)]
         public int NegativeIncrease { get; set; }
 
-        [JsonProperty(PropertyName = "total")]
+        [JsonProperty(PropertyName = "total", NullValueHandling = NullValueHandling.Ignore)]
         public int Total { get; set; }
 
-        [JsonProperty(PropertyName = "totalTestResultsSource")]
+        [JsonProperty(PropertyName = "totalTestResultsSource", NullValueHandling = NullValueHandling.Ignore)]
         public string TotalTestResultsSource { get; set; }
 
-        [JsonProperty(PropertyName = "totalTestResultsIncrease")]
+        [JsonProperty(PropertyName = "totalTestResultsIncrease", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalTestResultsIncrease { get; set; }
 
-        [JsonProperty(PropertyName = "posNeg")]
+        [JsonProperty(PropertyName = "posNeg", NullValueHandling = NullValueHandling.Ignore)]
         public int PosNeg { get; set; }
 
-        [JsonProperty(PropertyName = "deathIncrease")]
+        [JsonProperty(PropertyName = "deathIncrease", NullValueHandling = NullValueHandling.Ignore)]
         public int DeathIncrease { get; set; }
 
-        [JsonProperty(PropertyName = "hospitalizedIncrease")]
+        [JsonProperty(PropertyName = "hospitalizedIncrease", NullValueHandling = NullValueHandling.Ignore)]
         public int HospitalizedIncrease { get; set; }
         
-        [JsonProperty(PropertyName = "commercialScore")]
+        [JsonProperty(PropertyName = "commercialScore", NullValueHandling = NullValueHandling.Ignore)]
         public int CommercialScore { get; set; }
 
-        [JsonProperty(PropertyName = "negativeRegularScore")]
+        [JsonProperty(PropertyName = "negativeRegularScore", NullValueHandling = NullValueHandling.Ignore)]
         public int NegativeRegularScore { get; set; }
 
-        [JsonProperty(PropertyName = "negativeScore")]
+        [JsonProperty(PropertyName = "negativeScore", NullValueHandling = NullValueHandling.Ignore)]
         public int NegativeScore { get; set; }
 
-        [JsonProperty(PropertyName = "positiveScore")]
+        [JsonProperty(PropertyName = "positiveScore", NullValueHandling = NullValueHandling.Ignore)]
         public int PositiveScore { get; set; }
 
-        [JsonProperty(PropertyName = "score")]
+        [JsonProperty(PropertyName = "score", NullValueHandling = NullValueHandling.Ignore)]
         public int Score { get; set; }
 
         [JsonProperty(PropertyName = "grade")]

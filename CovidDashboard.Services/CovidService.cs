@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CovidDashboard.Interfaces;
@@ -32,8 +33,8 @@ namespace CovidDashboard.Services
             string json_data = await _httpClient.GetStringAsync(DailyTexasStat);
 
             List<DailyStatus> data = JsonConvert.DeserializeObject<List<DailyStatus>>(json_data);
-
-            return data;
+            
+            return data.OrderBy(o => o.DateChecked).ToList();
         }
     }
 }

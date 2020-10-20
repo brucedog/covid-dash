@@ -1,7 +1,7 @@
 ﻿@page "/covid"
 @using CovidDashboard.Shared
 @inject HttpClient Http
-@using Syncfusion.Blazor.Charts
+@inject NavigationManager NavigationManager 
 
 <h1>Covid Data</h1>
 
@@ -13,16 +13,42 @@
 }
 else
 {
-    <p>Negative Cases: @usStatus.Negative</p>
+    <div class="control-section">
+        <RadzenChart>
+            <RadzenLineSeries Data="@ChartData" CategoryProperty="Date" Title="Positive Increase" ValueProperty="PositiveCases">
+                <RadzenMarkers MarkerType="MarkerType.Circle" />
+            </RadzenLineSeries>
+            <RadzenValueAxis>
+                <RadzenGridLines Visible="true" />
+                <RadzenAxisTitle Text="Positive Cases Increase" />
+            </RadzenValueAxis>
+        </RadzenChart>
+    </div>
 }
 
 @code {
     private USStatus usStatus;
     private List<DailyStatus> dailyStatuses;
+    public List<LineChartData> ChartData;
+
+    public class LineChartData
+    {
+        public DateTime Date { get; set; }
+        public double TotalTests { get; set; }
+        public double PositiveCases { get; set; }
+    }
 
     protected override async Task OnInitializedAsync()
     {
         usStatus = await Http.GetFromJsonAsync<USStatus>("api/Covid/GetCurrentUSStats");
         dailyStatuses = await Http.GetFromJsonAsync<List<DailyStatus>>("api/Covid/GetTexasDailyStats");
+        ChartData = new List<LineChartData>(dailyStatuses.Count);
+
+        foreach (DailyStatus dailyStatus in dailyStatuses)
+        {
+            if(dailyStatus.DateChecked > DateTime.MinValue)
+                ChartData.Add(new LineChartData { Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day), PositiveCases = dailyStatus.PositiveIncrease});
+        }
+        Console.WriteLine("chart is " + ChartData.Count);
     }
 }

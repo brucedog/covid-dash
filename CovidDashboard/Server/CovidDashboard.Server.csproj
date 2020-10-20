@@ -5,7 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="lic.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="lic.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+    <PackageReference Include="Radzen.Blazor" Version="2.15.15" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDashboard.Server", "CovidDashboard\Server\CovidDashboard.Server.csproj", "{E579A619-F9B4-4151-A5AE-C911CD96F468}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDashboard.Server", "CovidDashboard\Server\CovidDashboard.Server.csproj", "{E579A619-F9B4-4151-A5AE-C911CD96F468}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDashboard.Client", "CovidDashboard\Client\CovidDashboard.Client.csproj", "{514E9F45-CB8B-4C07-A8BA-A83FF465CCF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDashboard.Client", "CovidDashboard\Client\CovidDashboard.Client.csproj", "{514E9F45-CB8B-4C07-A8BA-A83FF465CCF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDashboard.Shared", "CovidDashboard\Shared\CovidDashboard.Shared.csproj", "{F0F7D822-AE69-4504-AD22-16ADB6036FB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDashboard.Shared", "CovidDashboard\Shared\CovidDashboard.Shared.csproj", "{F0F7D822-AE69-4504-AD22-16ADB6036FB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDashboard.Services", "CovidDashboard.Services\CovidDashboard.Services.csproj", "{0EE52C96-80BB-49CE-A1B9-77DA2E711C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDashboard.Services", "CovidDashboard.Services\CovidDashboard.Services.csproj", "{0EE52C96-80BB-49CE-A1B9-77DA2E711C89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDashboard.Interfaces", "CovidDashboard.Interfaces\CovidDashboard.Interfaces.csproj", "{6F8B8403-BEB5-42B3-A463-FA79D905DDD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDashboard.Interfaces", "CovidDashboard.Interfaces\CovidDashboard.Interfaces.csproj", "{6F8B8403-BEB5-42B3-A463-FA79D905DDD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDashboardUnitTests", "CovidDashboardUnitTests\CovidDashboardUnitTests.csproj", "{6A8418CB-2EEB-404B-9FB1-CDAE8F58D665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDashboardUnitTests", "CovidDashboardUnitTests\CovidDashboardUnitTests.csproj", "{6A8418CB-2EEB-404B-9FB1-CDAE8F58D665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
