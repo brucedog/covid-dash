@@ -20,7 +20,7 @@ else
                         Data="@properties" TextProperty="Stat" ValueProperty="PropertyName" Style="margin-bottom: 20px" Change="@(args => Change(args, "DropDown with custom filter operator"))" />
 
         <RadzenChart>
-            <RadzenLineSeries Data="@ChartData" CategoryProperty="Date" Title="Positive Increase" ValueProperty="PositiveCases">
+            <RadzenLineSeries Data="@ChartData" CategoryProperty="Date" Title="@selectedChart" ValueProperty="Value">
                 <RadzenMarkers MarkerType="MarkerType.Circle" />
             </RadzenLineSeries>
             <RadzenValueAxis>
@@ -36,12 +36,13 @@ else
     private List<DailyStatus> dailyStatuses;
     public List<LineChartData> ChartData;
     public IList<string> properties;
+    public string selectedChart;
 
     public class LineChartData
     {
         public DateTime Date { get; set; }
         public double TotalTests { get; set; }
-        public double PositiveCases { get; set; }
+        public double Value { get; set; }
     }
 
     protected override async Task OnInitializedAsync()
@@ -53,10 +54,12 @@ else
         dailyStatuses = await Http.GetFromJsonAsync<List<DailyStatus>>("api/Covid/GetTexasDailyStats");
         ChartData = new List<LineChartData>(dailyStatuses.Count);
 
+        selectedChart = "Positive Increase";
+
         foreach (DailyStatus dailyStatus in dailyStatuses)
         {
             if(dailyStatus.DateChecked > DateTime.MinValue)
-                ChartData.Add(new LineChartData { Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day), PositiveCases = dailyStatus.PositiveIncrease});
+                ChartData.Add(new LineChartData { Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day), Value = dailyStatus.PositiveIncrease});
         }
         Console.WriteLine("chart is " + ChartData.Count);
     }
@@ -73,6 +76,12 @@ else
 
     private void Change(object args, string dropdownWithCustomFilterOperator)
     {
-        throw new NotImplementedException();
+        selectedChart = dropdownWithCustomFilterOperator.Trim();
+        
+        ChartData.Add(new LineChartData
+        {
+            // Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day),
+            // Value = dailyStatus.PositiveIncrease
+        });
     }
 }
