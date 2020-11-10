@@ -1,7 +1,8 @@
 ﻿@page "/covid"
 @using CovidDashboard.Shared
+@using System.Reflection
 @inject HttpClient Http
-@inject NavigationManager NavigationManager 
+@inject NavigationManager NavigationManager
 
 <h1>Covid Data</h1>
 
@@ -14,6 +15,10 @@
 else
 {
     <div class="control-section">
+        <RadzenDropDown AllowClear="true" TValue="string"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                        Data="@properties" TextProperty="Stat" ValueProperty="PropertyName" Style="margin-bottom: 20px" Change="@(args => Change(args, "DropDown with custom filter operator"))" />
+
         <RadzenChart>
             <RadzenLineSeries Data="@ChartData" CategoryProperty="Date" Title="Positive Increase" ValueProperty="PositiveCases">
                 <RadzenMarkers MarkerType="MarkerType.Circle" />
@@ -30,6 +35,7 @@ else
     private USStatus usStatus;
     private List<DailyStatus> dailyStatuses;
     public List<LineChartData> ChartData;
+    public IList<string> properties;
 
     public class LineChartData
     {
@@ -40,7 +46,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        usStatus = await Http.GetFromJsonAsync<USStatus>("api/Covid/GetCurrentUSStats");
+        CreatePropertiesDropdownItems();
+
+        usStatus = await Http.GetFromJsonAsync<USStatus>
+            ("api/Covid/GetCurrentUSStats");
         dailyStatuses = await Http.GetFromJsonAsync<List<DailyStatus>>("api/Covid/GetTexasDailyStats");
         ChartData = new List<LineChartData>(dailyStatuses.Count);
 
@@ -50,5 +59,20 @@ else
                 ChartData.Add(new LineChartData { Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day), PositiveCases = dailyStatus.PositiveIncrease});
         }
         Console.WriteLine("chart is " + ChartData.Count);
+    }
+
+    private void CreatePropertiesDropdownItems()
+    {
+        properties = new List<string>();
+        var propertyInfo = typeof(USStatus).GetProperties();
+        foreach (PropertyInfo info in propertyInfo)
+        {
+            properties.Add(info.Name);
+        }
+    }
+
+    private void Change(object args, string dropdownWithCustomFilterOperator)
+    {
+        throw new NotImplementedException();
     }
 }
