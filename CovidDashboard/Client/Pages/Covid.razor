@@ -8,17 +8,17 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (usStatus == null)
+@if (ChartData == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
     <div class="control-section">
-        <RadzenDropDown AllowClear="true" TValue="string"
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
-                        Data="@properties" TextProperty="Stat" ValueProperty="PropertyName" Style="margin-bottom: 20px" Change="@(args => Change(args, "DropDown with custom filter operator"))" />
-
+        <RadzenDropDown AllowClear="true" AllowFiltering="true" TValue="string"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" Placeholder="Select..."
+                        @bind-Value="dropDownValue"
+                        Data="@properties" TextProperty="Stat" Style="margin-bottom: 20px" Change="@(args => Change(args, "DropDown with placeholder"))" />
         <RadzenChart>
             <RadzenLineSeries Data="@ChartData" CategoryProperty="Date" Title="@selectedChart" ValueProperty="Value">
                 <RadzenMarkers MarkerType="MarkerType.Circle" />
@@ -32,33 +32,19 @@ else
 }
 
 @code {
-    private USStatus usStatus;
-    private List<DailyStatus> dailyStatuses;
     public List<LineChartData> ChartData;
     public IList<string> properties;
     public string selectedChart;
-
-    public class LineChartData
-    {
-        public DateTime Date { get; set; }
-        public double Value { get; set; }
-    }
+    public string dropDownValue;
 
     protected override async Task OnInitializedAsync()
     {
         CreatePropertiesDropdownItems();
 
-        usStatus = await Http.GetFromJsonAsync<USStatus>("api/Covid/GetCurrentUSStats");
-        dailyStatuses = await Http.GetFromJsonAsync<List<DailyStatus>>("api/Covid/GetTexasDailyStats");
-        ChartData = new List<LineChartData>(dailyStatuses.Count);
+        ChartData = await Http.GetFromJsonAsync<List<LineChartData>>("api/Covid/GetTexasDailyStats");
 
-        selectedChart = "Positive Increase";
-
-        foreach (DailyStatus dailyStatus in dailyStatuses)
-        {
-            if(dailyStatus.DateChecked > DateTime.MinValue)
-                ChartData.Add(new LineChartData { Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day), Value = dailyStatus.PositiveIncrease});
-        }
+        selectedChart = "Positive";
+        dropDownValue = selectedChart;
         Console.WriteLine("chart is " + ChartData.Count);
     }
 
@@ -72,24 +58,21 @@ else
         }
     }
 
-    private void Change(object args, string dropdownWithCustomFilterOperator)
-     {
-        selectedChart = dropdownWithCustomFilterOperator.Trim();
-        var newPropertyInfo = typeof(DailyStatus).GetProperty(selectedChart);
-     
-
-        ChartData.Clear();
-        foreach (DailyStatus dailyStatus in dailyStatuses)
+    private async void Change(object args, string dropdownWithCustomFilterOperator)
+    {
+        try
         {
-            double result = 0.0;
-            if(newPropertyInfo?.GetValue(dailyStatus, null) != null)
-                double.TryParse(((string)newPropertyInfo.GetValue(dailyStatus, null)), out result);
+            if (string.IsNullOrWhiteSpace(dropDownValue))
+                return;
 
-            ChartData.Add(new LineChartData
-            {
-                Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day),
-                Value = result
-            });
+            selectedChart = dropDownValue;
+            ChartData.Clear();
+
+            ChartData = await Http.GetFromJsonAsync<List<LineChartData>>($"api/Covid/GetTexasDailyStat/{dropDownValue}");
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace CovidDashboard.Services
         private const string CurrentUs = "https://api.covidtracking.com/v1/us/current.json";
         private const string DailyTexasStat = "https://api.covidtracking.com/v1/states/tx/daily.json";
         private HttpClient _httpClient;
+        private List<DailyStatus> texas_data;
 
         public CovidService()
         {
@@ -30,11 +31,15 @@ namespace CovidDashboard.Services
 
         public async Task<List<DailyStatus>> GetTexasDailyStats()
         {
+            if (texas_data != null)
+                return texas_data;
+
             string json_data = await _httpClient.GetStringAsync(DailyTexasStat);
 
-            List<DailyStatus> data = JsonConvert.DeserializeObject<List<DailyStatus>>(json_data);
-            
-            return data.OrderBy(o => o.DateChecked).ToList();
+            texas_data = JsonConvert.DeserializeObject<List<DailyStatus>>(json_data);
+
+            texas_data = texas_data.Where(w => w.CheckTimeEt != null && w.DateChecked.Year > 2018).ToList();
+            return texas_data;
         }
     }
 }

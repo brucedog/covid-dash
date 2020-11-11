@@ -28,7 +28,11 @@ namespace CovidDashboardUnitTests
         public async void CovidControllerGetTexasStats()
         {
             Mock<ICovidService> iCovidService = new Moq.Mock<ICovidService>();
-            iCovidService.Setup(s => s.GetTexasDailyStats()).Returns(Task.FromResult(new List<DailyStatus>()));
+            iCovidService.Setup(s => s.GetTexasDailyStats()).Returns(Task.FromResult(new List<DailyStatus>{new DailyStatus
+            {
+                Positive = 12,
+                DateChecked = DateTime.Now
+            }}));
 
             CovidController covidController = new CovidController(iCovidService.Object);
 
