@@ -25,7 +25,7 @@ else
             </RadzenLineSeries>
             <RadzenValueAxis>
                 <RadzenGridLines Visible="true" />
-                <RadzenAxisTitle Text="Positive Cases Increase" />
+                <RadzenAxisTitle Text="Charting" />
             </RadzenValueAxis>
         </RadzenChart>
     </div>
@@ -41,7 +41,6 @@ else
     public class LineChartData
     {
         public DateTime Date { get; set; }
-        public double TotalTests { get; set; }
         public double Value { get; set; }
     }
 
@@ -49,8 +48,7 @@ else
     {
         CreatePropertiesDropdownItems();
 
-        usStatus = await Http.GetFromJsonAsync<USStatus>
-            ("api/Covid/GetCurrentUSStats");
+        usStatus = await Http.GetFromJsonAsync<USStatus>("api/Covid/GetCurrentUSStats");
         dailyStatuses = await Http.GetFromJsonAsync<List<DailyStatus>>("api/Covid/GetTexasDailyStats");
         ChartData = new List<LineChartData>(dailyStatuses.Count);
 
@@ -67,7 +65,7 @@ else
     private void CreatePropertiesDropdownItems()
     {
         properties = new List<string>();
-        var propertyInfo = typeof(USStatus).GetProperties();
+        var propertyInfo = typeof(DailyStatus).GetProperties();
         foreach (PropertyInfo info in propertyInfo)
         {
             properties.Add(info.Name);
@@ -75,13 +73,23 @@ else
     }
 
     private void Change(object args, string dropdownWithCustomFilterOperator)
-    {
+     {
         selectedChart = dropdownWithCustomFilterOperator.Trim();
-        
-        ChartData.Add(new LineChartData
+        var newPropertyInfo = typeof(DailyStatus).GetProperty(selectedChart);
+     
+
+        ChartData.Clear();
+        foreach (DailyStatus dailyStatus in dailyStatuses)
         {
-            // Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day),
-            // Value = dailyStatus.PositiveIncrease
-        });
+            double result = 0.0;
+            if(newPropertyInfo?.GetValue(dailyStatus, null) != null)
+                double.TryParse(((string)newPropertyInfo.GetValue(dailyStatus, null)), out result);
+
+            ChartData.Add(new LineChartData
+            {
+                Date = new DateTime(dailyStatus.DateChecked.Year, dailyStatus.DateChecked.Month, dailyStatus.DateChecked.Day),
+                Value = result
+            });
+        }
     }
 }
